@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import TruckForm from './components/TruckForm';
 import JobForm from './components/JobForm';
 import JobsList from './components/JobsList';
-import './App.css';
 
 class App extends Component {
   render() {
@@ -11,7 +10,7 @@ class App extends Component {
       <div className="App">
         <div className='nav'>
           <h1>Oncue MVP</h1>
-          <p> Created by, Aric Alves. aric.alves2012@gmail.com </p>
+          <p> <strong>Created by, Aric Alves.</strong> Email: aric.alves2012@gmail.com </p>
         </div>
         <TruckForm />
         <JobForm />
