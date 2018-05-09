@@ -1,0 +1,19 @@
+{
+  "name": "oncue",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aricalves/oncue-mvp.git"
+  },
+  "author": "Aric Alves aric.alves2012@gmail.com",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/aricalves/oncue-mvp/issues"
+  },
+  "homepage": "https://github.com/aricalves/oncue-mvp#readme"
+}
