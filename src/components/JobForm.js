@@ -1,17 +1,17 @@
 import React from 'react';
 
-const JobForm = () => (
+const JobForm = (props) => (
   <div className='container'>
     <h3>Create Job</h3>
-    <form>
+    <form onSubmit={props.handleJobSubmit}>
       <p> Customer Name </p>
-      <input placeholder='Enter Customer Name' required></input>
+      <input placeholder='Enter Customer Name' name='customer-name' required></input>
 
       <p> Move Date </p>
-      <input placeholder='MM/DD/YY'></input>
+      <input placeholder='MM/DD/YY' name='date'></input>
 
       <p>Start Time</p>
-      <select id="job-start-time" name="job-start-time" required>
+      <select id="job-start-time" name="job-start" required>
         <option value="">Please choose</option>
         <option value="800">8 am</option>
         <option value="900">9 am</option>
@@ -29,8 +29,8 @@ const JobForm = () => (
       </select>
 
       <p> Estimated Duration </p>
-      <input placeholder='Enter Number of Hours' required></input>
-      <button type='submit' id='create-job'>Add Job</button>
+      <input placeholder='Enter Number of Hours' name='duration' required></input>
+      <button type='submit' >Add Job</button>
     </form>
   </div>
 );
