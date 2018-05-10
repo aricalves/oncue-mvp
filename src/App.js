@@ -5,6 +5,14 @@ import JobForm from './components/JobForm';
 import JobsList from './components/JobsList';
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+  handleSubmit(e) {
+    e.preventDefault();
+  }
+
   render() {
     return (
       <div className="App">
@@ -12,7 +20,7 @@ class App extends Component {
           <h1>Oncue MVP</h1>
           <p> <strong>Created by, Aric Alves.</strong> Email: aric.alves2012@gmail.com </p>
         </div>
-        <TruckForm />
+        <TruckForm handleSubmit={this.handleSubmit}/>
         <JobForm />
         <JobsList />
       </div>

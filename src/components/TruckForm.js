@@ -1,11 +1,12 @@
 import React from 'react';
 
-const TruckForm = () => (
+const TruckForm = (props) => {
+  return (
   <div className='container'>
     <h3>Create Truck</h3>
-    <form>
+    <form onSubmit={props.handleSubmit} >
       <p> Name </p>
-      <input defaultValue='Enter Truck Name' required></input>
+      <input placeholder='Enter Truck Name' type='text' required></input>
 
       <p>Start Time</p>
       <select id="truck-start-time" name="truck-start-time" required>
@@ -42,9 +43,9 @@ const TruckForm = () => (
         <option value="1900">7 pm</option>
         <option value="2000">8 pm</option>
       </select>
-      <button id='create-truck'>Create Truck</button>
+      <button type='submit' id='create-truck'>Create Truck</button>
     </form>
   </div>
-);
+)}
 
 export default TruckForm;

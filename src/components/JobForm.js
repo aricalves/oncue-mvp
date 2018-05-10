@@ -5,10 +5,10 @@ const JobForm = () => (
     <h3>Create Job</h3>
     <form>
       <p> Customer Name </p>
-      <input defaultValue='Enter Customer Name' required></input>
+      <input placeholder='Enter Customer Name' required></input>
 
       <p> Move Date </p>
-      <input defaultValue='MM/DD/YY'></input>
+      <input placeholder='MM/DD/YY'></input>
 
       <p>Start Time</p>
       <select id="job-start-time" name="job-start-time" required>
@@ -29,8 +29,8 @@ const JobForm = () => (
       </select>
 
       <p> Estimated Duration </p>
-      <input defaultValue='Enter Number of Hours' required></input>
-      <button id='create-job'>Add Job</button>
+      <input placeholder='Enter Number of Hours' required></input>
+      <button type='submit' id='create-job'>Add Job</button>
     </form>
   </div>
 );
