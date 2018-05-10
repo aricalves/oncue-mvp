@@ -9,10 +9,11 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-
+      trucks: []
     };
     this.handleTruckSubmit = this.handleTruckSubmit.bind(this);
     this.handleJobSubmit = this.handleJobSubmit.bind(this);
+    this.handleDeleteJob = this.handleDeleteJob.bind(this);
   }
 
   handleTruckSubmit(e) {
@@ -29,6 +30,11 @@ class App extends Component {
     e.target.reset();
   }
 
+  handleDeleteJob(job, e) {
+    e.preventDefault();
+    console.log(job);
+  }
+
   render() {
     return (
       <div className="App">
@@ -38,7 +44,7 @@ class App extends Component {
         </div>
         <TruckForm handleTruckSubmit={this.handleTruckSubmit}/>
         <JobForm handleJobSubmit={this.handleJobSubmit}/>
-        <JobsList />
+        <JobsList trucks={this.state.trucks} handleDeleteJob={this.handleDeleteJob}/>
       </div>
     );
   }

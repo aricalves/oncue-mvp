@@ -8,7 +8,7 @@ const JobForm = (props) => (
       <input placeholder='Enter Customer Name' name='customer-name' required></input>
 
       <p> Move Date </p>
-      <input placeholder='MM/DD/YY' name='date'></input>
+      <input type='date' name='date'></input>
 
       <p>Start Time</p>
       <select id="job-start-time" name="job-start" required>

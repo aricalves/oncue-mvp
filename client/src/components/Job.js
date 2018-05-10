@@ -8,7 +8,7 @@ const Job = (props) => (
         return (
           <li key={i}>
             <span>Customer: {job.customer_name}, Date: {job.date} Start: {job.start_time} Duration: {job.duration} hours</span>
-            <span id='delete'>&times;</span>
+            <span id='delete' onClick={(e) => props.handleDeleteJob(job, e)}>&times;</span>
           </li>
         )
       })}
