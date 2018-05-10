@@ -3,23 +3,7 @@ import React, { Component } from 'react';
 import TruckForm from './components/TruckForm';
 import JobForm from './components/JobForm';
 import JobsList from './components/JobsList';
-
-class Truck {
-  constructor(name, start, end) {
-    this.name = name;
-    this.start = start;
-    this.end = end;
-  }
-}
-
-class Job {
-  constructor(customerName, date, start, duration) {
-    this.customerName = customerName;
-    this.date = date;
-    this.start = start;
-    this.duration = duration;
-  }
-}
+import { Truck, Job } from './models'
 
 class App extends Component {
   constructor(props) {
@@ -35,12 +19,14 @@ class App extends Component {
     e.preventDefault();
     const truck = new Truck(e.target['truck-name'].value, e.target['truck-start'].value, e.target['truck-end'].value);
     console.log(truck);
+    e.target.reset();
   }
-
+  
   handleJobSubmit(e) {
     e.preventDefault();
     const job = new Job(e.target['customer-name'].value, e.target.date.value, e.target['job-start'].value, e.target.duration.value);
     console.log(job);
+    e.target.reset();
   }
 
   render() {

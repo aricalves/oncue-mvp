@@ -3,7 +3,7 @@ import React from 'react';
 const TruckForm = (props) => (
   <div className='container'>
     <h3>Create Truck</h3>
-      <form onSubmit={props.handleTruckSubmit}>
+    <form onSubmit={props.handleTruckSubmit} name='truck-form'>
       <p> Name </p>
       <input placeholder='Enter Truck Name' type='text' name='truck-name' required></input>
 

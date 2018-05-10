@@ -3,7 +3,7 @@ import React from 'react';
 const JobForm = (props) => (
   <div className='container'>
     <h3>Create Job</h3>
-    <form onSubmit={props.handleJobSubmit}>
+    <form onSubmit={props.handleJobSubmit} name='form'>
       <p> Customer Name </p>
       <input placeholder='Enter Customer Name' name='customer-name' required></input>
 
