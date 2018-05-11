@@ -5,14 +5,23 @@ import path from 'path';
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-const staticFiles = express.static(path.join(__dirname, '../../client/build'));
-
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+
+const router = express.Router();
+
+const staticFiles = express.static(path.join(__dirname, '../../client/build'));
+
 app.use(staticFiles);
 
-app.get('/', staticFiles);
+router.get('/ping', (req, res) => res.send('Pong'));
 
-app.all('*', staticFiles);
+app.use(router);
+
+// app.get('/', (req, res) => {
+//   res.sendFile(staticFiles)
+// });
+
+app.use('/', staticFiles);
 
 app.listen(PORT, () => console.log(`Listening on port ${PORT}`));
