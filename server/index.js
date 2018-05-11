@@ -8,8 +8,6 @@ const PORT = process.env.PORT || 3001;
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-// const router = express.Router();
-
 const staticFiles = express.static(path.join(__dirname, '../../client/build'));
 
 app.use(staticFiles);
@@ -46,8 +44,6 @@ app.delete('/jobs', (req, res) => {
   // send client updated trucks w/ jobs list
   res.send('ok');
 });
-
-// app.use(router);
 
 app.use('/*', staticFiles);
 
