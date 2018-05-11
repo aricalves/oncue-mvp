@@ -10,5 +10,22 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 sequelize.authenticate()
-  .then(() => console.log('DB connection successful'))
-  .catch(err => console.error('Unable to connect to the database:', err));
+.then(() => console.log('DB connection successful'))
+.catch(err => console.error('Unable to connect to the database:', err));
+
+const Truck = sequelize.define('truck', {
+  name: Sequelize.STRING,
+  start_time: Sequelize.INTEGER,
+  end_time: Sequelize.INTEGER
+});
+
+const Job = sequelize.define('job', {
+  customer_name: Sequelize.STRING,
+  date: Sequelize.DATE,
+  start_time: Sequelize.INTEGER,
+  duration: Sequelize.INTEGER
+});
+
+Truck.hasMany(Job);
+
+exports.syncTables = () => Promise.resolve(sequelize.sync());
