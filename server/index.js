@@ -18,10 +18,8 @@ router.get('/ping', (req, res) => res.send('Pong'));
 
 app.use(router);
 
-// app.get('/', (req, res) => {
-//   res.sendFile(staticFiles)
-// });
+app.use('/*', staticFiles);
 
-app.use('/', staticFiles);
+app.all('*', (req, res) => res.redirect('/'));
 
 app.listen(PORT, () => console.log(`Listening on port ${PORT}`));
