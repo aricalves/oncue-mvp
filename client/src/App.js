@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 
 import TruckForm from './components/TruckForm';
 import JobForm from './components/JobForm';
@@ -19,20 +20,23 @@ class App extends Component {
   handleTruckSubmit(e) {
     e.preventDefault();
     const truck = new Truck(e.target['truck-name'].value, e.target['truck-start'].value, e.target['truck-end'].value);
-    console.log(truck);
+    axios.post('/trucks', truck)
+      .then(res => console.log(res));
     e.target.reset();
   }
   
   handleJobSubmit(e) {
     e.preventDefault();
     const job = new Job(e.target['customer-name'].value, e.target.date.value, e.target['job-start'].value, e.target.duration.value);
-    console.log(job);
+    axios.post('/jobs', job)
+      .then(res => console.log(res))
     e.target.reset();
   }
 
   handleDeleteJob(job, e) {
     e.preventDefault();
-    console.log(job);
+    axios.delete('/jobs', job)
+      .then(res => console.log(res))
   }
 
   render() {
