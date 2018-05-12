@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "engines": {
-    "node": "9.8.0",
-    "npm": "6.0.0"
+    "node": "10.1.0",
+    "npm": "6.0.1"
   },
   "scripts": {
     "start": "nodemon --exec babel-node index.js",
