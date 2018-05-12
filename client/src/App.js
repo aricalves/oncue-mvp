@@ -32,7 +32,7 @@ class App extends Component {
       .then(({ data }) => ({ trucks: data }))
       .then(newState => this.setState(newState))
       .catch(e => console.log('Cannot get trucks at this time. Please try again later.'));
-      
+
     e.target.reset();
   }
   
@@ -40,14 +40,23 @@ class App extends Component {
     e.preventDefault();
     const job = new Job(e.target['customer-name'].value, e.target.date.value, e.target['job-start'].value, e.target.duration.value);
     axios.post('/jobs', job)
-      .then(res => console.log(res))
+      .then(({ data }) => {
+        if (!Array.isArray(data)) {
+          throw Error;
+        }
+        return { trucks: data };
+      })
+      .then(newState => this.setState(newState))
+      .catch(e => alert('Sorry, we can\'t book your job at this time.'))
     e.target.reset();
   }
 
-  handleDeleteJob(job, e) {
+  handleDeleteJob(jobId, e) {
     e.preventDefault();
-    axios.delete('/jobs', job)
-      .then(res => console.log(res))
+    axios.delete(`/jobs/${jobId}`)
+      .then(({ data }) => ({ trucks: data }))
+      .then(newState => this.setState(newState))
+      .catch(e => alert('Sorry, we can\'t delete that job at this time.'))
   }
 
   render() {

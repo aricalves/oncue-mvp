@@ -4,6 +4,7 @@ import path from 'path';
 
 import db from './database';
 import truckControllers from './database/controllers/Truck';
+import JobControllers from './database/controllers/Job';
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -19,7 +20,6 @@ app.options('/', (req, res) => res.send('GET, POST, DELETE, OPTIONS'));
 
 const handleGetTrucks = (req, res) =>
   truckControllers.getAll()
-    .then(trucks => trucks.map(truck => truck.dataValues))
     .then(trucksWithJobs => res.send(trucksWithJobs))
     .catch(e => res.status(503).send(e));
 
@@ -32,13 +32,23 @@ app.post('/trucks', (req, res) => {
     .catch(e => res.status(503).send(e));
 });
 
-app.post('/jobs', (req, res) => {
-  console.log(req.body);
-  // if no trucks exist
-    // send err('No Trucks available')
-    // Status code 200
+app.post('/jobs', async (req, res) => {
+  const jobPropspect = req.body;
+  const trucks = await truckControllers.getAll();
+
+  if (trucks.length < 1) {
+    // Status code 204, no content
+    return res.status(204).send(Error('No Trucks Available.'));
+  }
   // if trucks exist without jobs, assign job to first truck
-    // send client all trucks with jobs; code: 200
+  const availableResources = trucks.filter(truck => truck.jobs.length === 0);
+  if (availableResources.length) {
+    jobPropspect.truckId = availableResources[0].id;
+    return JobControllers.createJob(jobPropspect)
+      .then(() => handleGetTrucks(req, res))
+      .catch(e => res.status(503).send(e));
+  }
+  res.send(Error('Something went wrong'));
   // if all trucks have jobs
     // compare date, start time, and duration to each truck's assigned jobs
     // if we find a truck with an open slot
@@ -46,16 +56,14 @@ app.post('/jobs', (req, res) => {
       // send client updated trucks w/ jobs list; code:200
   // else
     // send client an error, job cannot be created 'something went wrong'
-  res.send('ok');
 });
 
-app.delete('/jobs', (req, res) => {
-  console.log(req.body);
-  // find job by id
-  // if not found, send err
-  // else delete job from db and remove reference from job's assigned truck
-  // send client updated trucks w/ jobs list
-  res.send('ok');
+app.delete('/jobs/:id', (req, res) => {
+  const jobId = req.params.id;
+  return JobControllers.deleteJob(jobId)
+    .then(() => handleGetTrucks(req, res))
+    .catch(e => res.status(503).send(e));
+  res.send('ok')
 });
 
 app.use('/*', staticFiles);

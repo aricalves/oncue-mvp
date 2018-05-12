@@ -1,4 +1,5 @@
-import { Truck, Job } from '../../database';
+import { Truck } from '../../database';
 
-exports.createTruck = (newTruck) => Truck.create(newTruck);
-exports.getAll = () => Truck.findAll({ include: 'jobs' });
+exports.createTruck = newTruck => Truck.create(newTruck);
+exports.getAll = () => Truck.findAll({ include: 'jobs' })
+  .then(trucks => trucks.map(truck => truck.dataValues));
