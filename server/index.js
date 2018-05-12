@@ -3,6 +3,7 @@ import bodyParser from 'body-parser';
 import path from 'path';
 
 import db from './database';
+import truckControllers from './database/controllers/Truck';
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -15,10 +16,12 @@ const staticFiles = express.static(path.join(__dirname, '../../client/build'));
 app.use(staticFiles);
 
 app.post('/trucks', (req, res) => {
-  console.log(req.body)
-  // create new entry in db
-  // send trucks w/ jobs back to client
-  res.send('ok');
+  const newTruck = req.body;
+  
+  truckControllers.createTruck(newTruck)
+    .then(() => truckControllers.getAll())
+    .then(trucks => res.send(trucks))
+    .catch(e => res.send(e));
 });
 
 app.post('/jobs', (req, res) => {

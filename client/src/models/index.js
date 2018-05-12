@@ -1,16 +1,16 @@
 class Truck {
   constructor(name, start, end) {
     this.name = name;
-    this.start = start;
-    this.end = end;
+    this.start_time = start;
+    this.end_time = end;
   }
 }
 
 class Job {
   constructor(customerName, date, start, duration) {
-    this.customerName = customerName;
+    this.customer_name = customerName;
     this.date = date;
-    this.start = start;
+    this.start_time = start;
     this.duration = duration;
   }
 }

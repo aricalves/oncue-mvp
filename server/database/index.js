@@ -29,3 +29,5 @@ const Job = sequelize.define('job', {
 Truck.hasMany(Job);
 
 exports.syncTables = () => Promise.resolve(sequelize.sync());
+exports.Truck = Truck;
+exports.Job = Job;
