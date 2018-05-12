@@ -19,6 +19,7 @@ class App extends Component {
 
   componentDidMount() {
     axios.get('/trucks')
+      .then(({ data }) => ({ trucks: data }))
       .then(newState => this.setState(newState))
       .catch(e => console.log('Cannot get trucks at this time. Please try again later.'))
   }
@@ -26,10 +27,12 @@ class App extends Component {
   handleTruckSubmit(e) {
     e.preventDefault();
     const truck = new Truck(e.target['truck-name'].value, e.target['truck-start'].value, e.target['truck-end'].value);
+    
     axios.post('/trucks', truck)
       .then(({ data }) => ({ trucks: data }))
       .then(newState => this.setState(newState))
       .catch(e => console.log('Cannot get trucks at this time. Please try again later.'));
+      
     e.target.reset();
   }
   
