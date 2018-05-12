@@ -29,7 +29,7 @@ const JobForm = (props) => (
       </select>
 
       <p> Estimated Duration </p>
-      <input placeholder='Enter Number of Hours' name='duration' required></input>
+      <input id='duration' placeholder='Enter Number' name='duration' type='number' min='1' max='12' required></input>
       <button type='submit' >Add Job</button>
     </form>
   </div>

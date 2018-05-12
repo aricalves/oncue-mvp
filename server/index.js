@@ -1,7 +1,7 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import path from 'path';
-import 'babel-polyfill';
+
 
 import db from './database';
 import truckControllers from './database/controllers/Truck';
