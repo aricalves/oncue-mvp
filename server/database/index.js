@@ -20,7 +20,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 sequelize.authenticate()
-.then(() => console.log('DB connection successful'))
+.then(() => process.env.NODE_ENV === 'production' ? null : console.log('DB connection successful'))
 .catch(err => console.error('Unable to connect to the database:', err));
 
 const Truck = sequelize.define('truck', {
