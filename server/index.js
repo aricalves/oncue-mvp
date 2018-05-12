@@ -22,7 +22,7 @@ app.options('/', (req, res) => res.send('GET, POST, DELETE, OPTIONS'));
 const handleGetTrucks = (req, res) =>
   truckControllers.getAll()
     .then(trucksWithJobs => res.send(trucksWithJobs))
-    .catch(e => res.status(503).send(e));
+    .catch(e => res.status(503).send('Error getting trucks.\n', e));
 
 app.get('/trucks', handleGetTrucks);
 
@@ -35,11 +35,11 @@ app.post('/trucks', (req, res) => {
 
 app.post('/jobs', async (req, res) => {
   const jobPropspect = req.body;
-  const trucks = await truckControllers.getAll();
-
-  if (trucks.length < 1) {
-    // Status code 204, no content
-    return res.status(204).send(Error('No Trucks Available.'));
+  let trucks;
+  try {
+    trucks = await truckControllers.getAll();
+  } catch(err) {
+    return res.status(500).send(Error('Cannot get trucks.'));
   }
   // if trucks exist without jobs, assign job to first truck
   const availableResources = trucks.filter(truck => truck.jobs.length === 0);
@@ -49,14 +49,13 @@ app.post('/jobs', async (req, res) => {
       .then(() => handleGetTrucks(req, res))
       .catch(e => res.status(503).send(e));
   }
-  res.send(Error('Something went wrong'));
   // if all trucks have jobs
-    // compare date, start time, and duration to each truck's assigned jobs
-    // if we find a truck with an open slot
-      // asssign the job to the truck
-      // send client updated trucks w/ jobs list; code:200
+  // compare date, start time, and duration to each truck's assigned jobs
+  // if we find a truck with an open slot
+  // asssign the job to the truck
+  // send client updated trucks w/ jobs list; code:200
   // else
-    // send client an error, job cannot be created 'something went wrong'
+  res.send(Error('Something went wrong'));
 });
 
 app.delete('/jobs/:id', (req, res) => {
