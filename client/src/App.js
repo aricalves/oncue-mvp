@@ -12,16 +12,24 @@ class App extends Component {
     this.state = {
       trucks: []
     };
+    this.formatResponseOrErr = this.formatResponseOrErr.bind(this);
     this.handleTruckSubmit = this.handleTruckSubmit.bind(this);
     this.handleJobSubmit = this.handleJobSubmit.bind(this);
     this.handleDeleteJob = this.handleDeleteJob.bind(this);
   }
 
+  formatResponseOrErr({ data }) {
+    if (!Array.isArray(data)) {
+      throw Error;
+    }
+    return { trucks: data };
+  }
+
   componentDidMount() {
     axios.get('/trucks')
-      .then(({ data }) => ({ trucks: data }))
+      .then(response => this.formatResponseOrErr(response))
       .then(newState => this.setState(newState))
-      .catch(e => console.log('Cannot get trucks at this time. Please try again later.'))
+      .catch(e => alert('Cannot get trucks at this time. Please try again later.'))
   }
 
   handleTruckSubmit(e) {
@@ -29,9 +37,9 @@ class App extends Component {
     const truck = new Truck(e.target['truck-name'].value, e.target['truck-start'].value, e.target['truck-end'].value);
     
     axios.post('/trucks', truck)
-      .then(({ data }) => ({ trucks: data }))
+      .then(response => this.formatResponseOrErr(response))
       .then(newState => this.setState(newState))
-      .catch(e => console.log('Cannot get trucks at this time. Please try again later.'));
+      .catch(e => alert('Cannot get trucks at this time. Please try again later.'));
 
     e.target.reset();
   }
@@ -40,12 +48,7 @@ class App extends Component {
     e.preventDefault();
     const job = new Job(e.target['customer-name'].value, e.target.date.value, e.target['job-start'].value, e.target.duration.value);
     axios.post('/jobs', job)
-      .then(({ data }) => {
-        if (!Array.isArray(data)) {
-          throw Error;
-        }
-        return { trucks: data };
-      })
+      .then(response => this.formatResponseOrErr(response))
       .then(newState => this.setState(newState))
       .catch(e => alert('Sorry, we can\'t book your job at this time.'))
     e.target.reset();
@@ -54,7 +57,7 @@ class App extends Component {
   handleDeleteJob(jobId, e) {
     e.preventDefault();
     axios.delete(`/jobs/${jobId}`)
-      .then(({ data }) => ({ trucks: data }))
+      .then(response => this.formatResponseOrErr(response))
       .then(newState => this.setState(newState))
       .catch(e => alert('Sorry, we can\'t delete that job at this time.'))
   }
@@ -64,7 +67,7 @@ class App extends Component {
       <div className="App">
         <div className='nav'>
           <h1>Oncue MVP</h1>
-          <p> <strong>Created by, Aric Alves.</strong> Email: aric.alves2012@gmail.com </p>
+          <p> <strong>Created by, Aric Alves.</strong><br/>aric.alves2012@gmail.com</p>
         </div>
         <TruckForm handleTruckSubmit={this.handleTruckSubmit}/>
         <JobForm handleJobSubmit={this.handleJobSubmit}/>
