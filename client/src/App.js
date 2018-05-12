@@ -67,7 +67,7 @@ class App extends Component {
       <div className="App">
         <div className='nav'>
           <h1>Oncue MVP</h1>
-          <p> <strong>Created by, Aric Alves.</strong><br/>aric.alves2012@gmail.com</p>
+          <p><strong>Created by, Aric Alves.</strong><br/>aric.alves2012@gmail.com</p>
         </div>
         <TruckForm handleTruckSubmit={this.handleTruckSubmit}/>
         <JobForm handleJobSubmit={this.handleJobSubmit}/>
