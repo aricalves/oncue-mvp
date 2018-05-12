@@ -17,15 +17,17 @@ app.use(staticFiles);
 
 app.options('/', (req, res) => res.send('GET, POST, DELETE, OPTIONS'));
 
+// const getJobs = async (truck, next) => {
+//   const jobs = await truck.getJobs();
+//   truck.dataValues.jobs = jobs;
+//   next(null, truck);
+// };
+
 app.get('/trucks', (req, res) => {
   truckControllers.getAll()
-    .then(trucks => 
-      trucks.map(truck => {
-        truck.dataValues.jobs = [{customer_name: 'a', start_time: 700, duration: 5, date: 'today'}];
-        return truck;
-      }))
-    .then(trucks => res.send(trucks))
-    .catch(e => res.send(e));
+    .then(trucks => trucks.map(truck => truck.dataValues))
+    .then(({ data }) => res.send(data))
+    .catch(e => res.status(503).send(e));
 });
 
 app.post('/trucks', (req, res) => {

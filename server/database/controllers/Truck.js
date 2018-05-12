@@ -1,4 +1,4 @@
-import { Truck } from '../../database';
+import { Truck, Job } from '../../database';
 
 exports.createTruck = (newTruck) => Truck.create(newTruck);
-exports.getAll = () => Truck.findAll();
+exports.getAll = () => Truck.findAll({ include: 'jobs' });

@@ -19,7 +19,6 @@ class App extends Component {
 
   componentDidMount() {
     axios.get('/trucks')
-      .then(({ data }) => ({ trucks: data }))
       .then(newState => this.setState(newState))
       .catch(e => console.log('Cannot get trucks at this time. Please try again later.'))
   }
