@@ -17,11 +17,20 @@ class App extends Component {
     this.handleDeleteJob = this.handleDeleteJob.bind(this);
   }
 
+  componentDidMount() {
+    axios.get('/trucks')
+      .then(({ data }) => ({ trucks: data }))
+      .then(newState => this.setState(newState))
+      .catch(e => console.log('Cannot get trucks at this time. Please try again later.'))
+  }
+
   handleTruckSubmit(e) {
     e.preventDefault();
     const truck = new Truck(e.target['truck-name'].value, e.target['truck-start'].value, e.target['truck-end'].value);
     axios.post('/trucks', truck)
-      .then(res => console.log(res));
+      .then(({ data }) => ({ trucks: data }))
+      .then(newState => this.setState(newState))
+      .catch(e => console.log('Cannot get trucks at this time. Please try again later.'));
     e.target.reset();
   }
   

@@ -15,11 +15,29 @@ const staticFiles = express.static(path.join(__dirname, '../../client/build'));
 
 app.use(staticFiles);
 
+app.options('/', (req, res) => res.send('GET, POST, DELETE, OPTIONS'));
+
+app.get('/trucks', (req, res) => {
+  truckControllers.getAll()
+    .then(trucks => 
+      trucks.map(truck => {
+        truck.dataValues.jobs = [{customer_name: 'a', start_time: 700, duration: 5, date: 'today'}];
+        return truck;
+      }))
+    .then(trucks => res.send(trucks))
+    .catch(e => res.send(e));
+});
+
 app.post('/trucks', (req, res) => {
   const newTruck = req.body;
-  
+
   truckControllers.createTruck(newTruck)
     .then(() => truckControllers.getAll())
+    .then(trucks =>
+      trucks.map(truck => {
+        truck.dataValues.jobs = [{ customer_name: 'a', start_time: 700, duration: 5, date: 'today' }];
+        return truck;
+      }))
     .then(trucks => res.send(trucks))
     .catch(e => res.send(e));
 });

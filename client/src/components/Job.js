@@ -2,7 +2,7 @@ import React from 'react';
 
 const Job = (props) => (
   <div className='job-container'>
-    <p>{`${props.truck_name} Assignments`}</p>
+    <p>{`${props.name} Assignments`}</p>
     <ul>
       {props.jobs.map((job, i) => {
         return (
