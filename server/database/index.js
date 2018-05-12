@@ -3,9 +3,7 @@ import pg from 'pg';
 import 'dotenv';
 
 let sequelize;
-if (process.env.NODE_ENV !== 'production') {
-  sequelize = new Sequelize('oncue', process.env.DB_USER, process.env.DB_PASS, { host: process.env.DB_HOST, dialect: 'postgres' });
-} else {
+if (process.env.DATABASE_URL) {
   sequelize = new Sequelize(process.env.DATABASE_URL, {
     dialect: 'postgres',
     protocol: 'postgres',
@@ -13,6 +11,8 @@ if (process.env.NODE_ENV !== 'production') {
       ssl: true
     }
   });
+} else {
+  sequelize = new Sequelize('oncue', process.env.DB_USER, process.env.DB_PASS, { host: process.env.DB_HOST, dialect: 'postgres' });
 }
 
 sequelize.authenticate()
