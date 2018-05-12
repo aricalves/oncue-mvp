@@ -1,1 +1,1 @@
-web: npm run start:prod
+web: NODE_ENV=production DATABASE_URL=$(heroku config:get DATABASE_URL -a oncue-mvp) npm run start:prod
