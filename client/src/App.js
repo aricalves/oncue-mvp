@@ -46,7 +46,8 @@ class App extends Component {
   
   handleJobSubmit(e) {
     e.preventDefault();
-    const job = new Job(e.target['customer-name'].value, e.target.date.value, e.target['job-start'].value, e.target.duration.value);
+    const jobEnd = (e.target.duration.value * 100) + Number(e.target['job-start'].value);
+    const job = new Job(e.target['customer-name'].value, e.target.date.value, e.target['job-start'].value, jobEnd);
     axios.post('/jobs', job)
       .then(response => this.formatResponseOrErr(response))
       .then(newState => this.setState(newState))

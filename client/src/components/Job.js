@@ -17,7 +17,7 @@ const Job = (props) => (
       {props.jobs.map(job => {
         return (
           <li key={job.id}>
-            <span>Customer: {job.customer_name}, Date: {job.date.substring(0, 10)} Start: {parseTime(job.start_time)} Duration: {job.duration} hours</span>
+            <span>Customer: {job.customer_name}, Date: {job.date.substring(0, 10)} Start: {parseTime(job.start_time)} Duration: {(job.duration - job.start_time) * 0.01} hours</span>
             <span id='delete' onClick={(e) => props.handleDeleteJob(job.id, e)}>&times;</span>
           </li>
         )
