@@ -56,13 +56,13 @@ app.post('/jobs', async (req, res) => {
   if (trucks.length) {
     // compare date, start time, and duration to each truck's assigned jobs
     JobControllers.findJobsByDate(jobPropspect.date)
-      .then(res => console.log(res));
-    return res.send('ok')
+      .then(res => console.log(`date req'd: ${jobPropspect.date}`, res));
     // if we find a truck with an open slot
     // asssign the job to the truck
     // send client updated trucks w/ jobs list; code:200
-    // catch any hanging requests
+    return handleGetTrucks(req, res);
   }
+  // catch any hanging requests
   res.send(Error('Something went wrong'));
 });
 
