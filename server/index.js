@@ -2,6 +2,9 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import path from 'path';
 
+if (process.env.NODE_ENV === 'production') {
+  require('babel-polyfill');
+}
 
 import db from './database';
 import truckControllers from './database/controllers/Truck';
@@ -49,12 +52,17 @@ app.post('/jobs', async (req, res) => {
       .then(() => handleGetTrucks(req, res))
       .catch(e => res.status(503).send(e));
   }
-  // if all trucks have jobs
-  // compare date, start time, and duration to each truck's assigned jobs
-  // if we find a truck with an open slot
-  // asssign the job to the truck
-  // send client updated trucks w/ jobs list; code:200
-  // else
+  // all trucks have at least one job
+  if (trucks.length) {
+    // compare date, start time, and duration to each truck's assigned jobs
+    JobControllers.findJobsByDate(jobPropspect.date)
+      .then(res => console.log(res));
+    return res.send('ok')
+    // if we find a truck with an open slot
+    // asssign the job to the truck
+    // send client updated trucks w/ jobs list; code:200
+    // catch any hanging requests
+  }
   res.send(Error('Something went wrong'));
 });
 
