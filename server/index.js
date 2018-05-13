@@ -59,7 +59,6 @@ app.delete('/jobs/:id', (req, res) => {
   return JobControllers.deleteJob(jobId)
     .then(() => handleGetTrucks(req, res))
     .catch(e => res.status(503).send(e));
-  res.send('ok')
 });
 
 app.use('/*', staticFiles);
