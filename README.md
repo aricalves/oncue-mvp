@@ -37,6 +37,8 @@ Honorable Mentions: Sequelize, Axios, and Babel
 - (Improve) Job scheduling conflict detection requires 3 database queries. More advanced queries could improve response latency.
 - (Improve) App does not account for time between jobs, breaks, etc.
 - (Feat) Automate removing completed jobs.
+- (Improve) Add logging middleware.
+- (Improve) Tests! I opted for speed here, so the tests went out the door.
 - ...A ton of other cool features and fixes.
 
 ### Made with ❤️ and ☕️ by, Aric Alves.
