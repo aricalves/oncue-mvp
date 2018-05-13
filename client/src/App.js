@@ -46,21 +46,25 @@ class App extends Component {
   
   handleJobSubmit(e) {
     e.preventDefault();
-    const jobEnd = (e.target.duration.value * 100) + Number(e.target['job-start'].value);
-    const job = new Job(e.target['customer-name'].value, e.target.date.value, e.target['job-start'].value, jobEnd); // eslint-disable-line
+    const jobStart = Number(e.target['job-start'].value);
+    const jobEnd = (e.target.duration.value * 100) + jobStart;
+    const newJob = new Job(e.target['customer-name'].value, e.target.date.value, jobStart, jobEnd);
 
+    // prioritize scheduling trucks without jobs first
     const trucksWithoutJobs = this.state.trucks.filter(truck => truck.jobs.length === 0);
     if (trucksWithoutJobs.length) {
-      job.truckId = trucksWithoutJobs[0].id;
-      axios.post('/jobs', job)
+      // found a truck with no jobs, schedule job
+      newJob.truckId = trucksWithoutJobs[0].id;
+      axios.post('/jobs', newJob)
         .then(response => this.formatResponseOrErr(response))
         .then(newState => this.setState(newState))
         .catch(e => alert('Sorry, we can\'t book your job at this time.'));
     } else {
-      alert('sorry pal');
+      // send job proposition to server to find if any resources can pick up job
+      axios.post('/jobs/propose', newJob)
+        .then(response => console.log(response.data))
+        .catch(e => console.error(e));
     }
-
-
     e.target.reset();
   }
 
