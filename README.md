@@ -15,13 +15,15 @@ Find my (minimal) app plan [here](https://docs.google.com/document/d/1L6f221wNPL
 - (Suggested) Chrome@66^
 ### Development
 - Clone this repo and cd into project directory
-- In your terminal run `npm run install`
-- Still in terminal run `npm start`
+- In your terminal run `npm i`
+- Still in terminal run `npm run install`
+- Finally `npm start`
 - Navigate to http://localhost:3000/ in your browser
 ### Production Build
 - Clone this repo and cd into project directory
-- In your terminal run `npm run install`
-- Still in terminal run `npm run build`
+- In your terminal run `npm i`
+- Still in your terminal run `npm run install`
+- Run `npm run build`
 - Finally `npm run local:prod`
 - Navigate to http://localhost:3001/ in your browser
 
