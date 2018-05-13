@@ -38,28 +38,20 @@ app.post('/trucks', (req, res) => {
 
 app.post('/jobs', (req, res) => {
   const jobPropspect = req.body;
-
-  // let trucks;
-  // try {
-  //   trucks = await truckControllers.getAll();
-  // } catch(err) {
-  //   return res.status(500).send(Error('Cannot get trucks.'));
-  // }
-
   return JobControllers.createJob(jobPropspect)
     .then(() => handleGetTrucks(req, res))
     .catch(e => res.status(503).send(e));
+});
 
-  // all trucks have at least one job
-  if (trucks.length) {
-    // compare date, start time, and duration to each truck's assigned jobs
-    JobControllers.findJobsByDate(jobPropspect.date)
-      .then(res => console.log(`date req'd: ${jobPropspect.date}`, res));
-    // if we find a truck with an open slot
-    // asssign the job to the truck
-    // send client updated trucks w/ jobs list; code:200
-    return handleGetTrucks(req, res);
-  }
+app.post('/jobs/propose', (req, res) => {
+  const jobProposal = req.body;
+  // find all conflicting jobs, gather array with conflicting truck ids
+  // out of all trucks remove conflicts
+  // if any trucks are left,
+    // schedule job with first remaining truck
+    // return handleGetTrucks(req, res);
+  // else send client error "Can't schedule your job."
+  return handleGetTrucks(req, res);
 });
 
 app.delete('/jobs/:id', (req, res) => {
