@@ -9,12 +9,14 @@ Find my (minimal) app plan [here](https://docs.google.com/document/d/1L6f221wNPL
 ## Tech: React, Node.js, Express, and Postgres
 Honorable Mentions: Sequelize, Axios, and Babel
 
-## Trade-offs and Possible Next Features:
+## Possible Next Features and Trade-offs:
 - (Feat) Time slot suggestions
 - (Fix) Remove alerts, use subtle modal pop-ups instead
 - (Feat) Calendar View
 - (Trade-off) Job scheduling conflict detection requires 3 database queries. More advanced queries could improve response latency.
-- ...A ton of other cool features.
+- (Problem) App does not account for time between jobs, breaks, etc.
+- (Feat) Automate removing completed jobs.
+- ...A ton of other cool features and fixes.
 
 ### Made with ❤️ and ☕️ by, Aric Alves.
 aric.alves2012@gmail.com
