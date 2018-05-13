@@ -36,22 +36,20 @@ app.post('/trucks', (req, res) => {
     .catch(e => res.status(503).send(e));
 });
 
-app.post('/jobs', async (req, res) => {
+app.post('/jobs', (req, res) => {
   const jobPropspect = req.body;
-  let trucks;
-  try {
-    trucks = await truckControllers.getAll();
-  } catch(err) {
-    return res.status(500).send(Error('Cannot get trucks.'));
-  }
-  // if trucks exist without jobs, assign job to first truck
-  const availableResources = trucks.filter(truck => truck.jobs.length === 0);
-  if (availableResources.length) {
-    jobPropspect.truckId = availableResources[0].id;
-    return JobControllers.createJob(jobPropspect)
-      .then(() => handleGetTrucks(req, res))
-      .catch(e => res.status(503).send(e));
-  }
+
+  // let trucks;
+  // try {
+  //   trucks = await truckControllers.getAll();
+  // } catch(err) {
+  //   return res.status(500).send(Error('Cannot get trucks.'));
+  // }
+
+  return JobControllers.createJob(jobPropspect)
+    .then(() => handleGetTrucks(req, res))
+    .catch(e => res.status(503).send(e));
+
   // all trucks have at least one job
   if (trucks.length) {
     // compare date, start time, and duration to each truck's assigned jobs
@@ -62,8 +60,6 @@ app.post('/jobs', async (req, res) => {
     // send client updated trucks w/ jobs list; code:200
     return handleGetTrucks(req, res);
   }
-  // catch any hanging requests
-  res.send(Error('Something went wrong'));
 });
 
 app.delete('/jobs/:id', (req, res) => {

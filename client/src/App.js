@@ -47,11 +47,20 @@ class App extends Component {
   handleJobSubmit(e) {
     e.preventDefault();
     const jobEnd = (e.target.duration.value * 100) + Number(e.target['job-start'].value);
-    const job = new Job(e.target['customer-name'].value, e.target.date.value, e.target['job-start'].value, jobEnd);
-    axios.post('/jobs', job)
-      .then(response => this.formatResponseOrErr(response))
-      .then(newState => this.setState(newState))
-      .catch(e => alert('Sorry, we can\'t book your job at this time.'))
+    const job = new Job(e.target['customer-name'].value, e.target.date.value, e.target['job-start'].value, jobEnd); // eslint-disable-line
+
+    const trucksWithoutJobs = this.state.trucks.filter(truck => truck.jobs.length === 0);
+    if (trucksWithoutJobs.length) {
+      job.truckId = trucksWithoutJobs[0].id;
+      axios.post('/jobs', job)
+        .then(response => this.formatResponseOrErr(response))
+        .then(newState => this.setState(newState))
+        .catch(e => alert('Sorry, we can\'t book your job at this time.'));
+    } else {
+      alert('sorry pal');
+    }
+
+
     e.target.reset();
   }
 
