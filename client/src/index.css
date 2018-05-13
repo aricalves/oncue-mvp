@@ -37,3 +37,9 @@ select {
 #duration {
   width: 85px;
 }
+
+#hours {
+  color: rgb(145, 145, 145);
+  font-size: 0.9em;
+  font-style: italic;
+}

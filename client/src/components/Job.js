@@ -13,6 +13,7 @@ const parseTime = (military) => {
 const Job = (props) => (
   <div className='job-container'>
     <p>{`${props.name} Assignments`}</p>
+    <span id='hours'>{`Working Hours: ${parseTime(props.start_time)} - ${parseTime(props.end_time)}`}</span>
     <ul>
       {props.jobs.map(job => {
         return (
