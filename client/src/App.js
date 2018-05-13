@@ -58,7 +58,7 @@ class App extends Component {
       axios.post('/jobs', newJob)
         .then(response => this.formatResponseOrErr(response))
         .then(newState => this.setState(newState))
-        .catch(e => alert('Sorry, we can\'t book your job at this time.'));
+        .catch(e => alert('Sorry, we had trouble booking your job. There are no conflicts, try again.'));
     } else {
       // send job proposition to server to find if any resources can pick up job
       axios.post('/jobs/propose', newJob)
