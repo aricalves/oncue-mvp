@@ -36,13 +36,6 @@ app.post('/trucks', (req, res) => {
     .catch(e => res.status(503).send(e));
 });
 
-// app.post('/jobs', (req, res) => {
-//   const jobPropspect = req.body;
-//   return JobControllers.createJob(jobPropspect)
-//     .then(() => handleGetTrucks(req, res))
-//     .catch(e => res.status(503).send(e));
-// });
-
 app.post('/jobs', async (req, res) => {
   const jobProposal = req.body;
   // find all conflicting jobs, gather array with conflicting truck ids
