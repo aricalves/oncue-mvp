@@ -36,22 +36,29 @@ app.post('/trucks', (req, res) => {
     .catch(e => res.status(503).send(e));
 });
 
-app.post('/jobs', (req, res) => {
-  const jobPropspect = req.body;
-  return JobControllers.createJob(jobPropspect)
-    .then(() => handleGetTrucks(req, res))
-    .catch(e => res.status(503).send(e));
-});
+// app.post('/jobs', (req, res) => {
+//   const jobPropspect = req.body;
+//   return JobControllers.createJob(jobPropspect)
+//     .then(() => handleGetTrucks(req, res))
+//     .catch(e => res.status(503).send(e));
+// });
 
-app.post('/jobs/propose', (req, res) => {
+app.post('/jobs', async (req, res) => {
   const jobProposal = req.body;
   // find all conflicting jobs, gather array with conflicting truck ids
-  // out of all trucks remove conflicts
-  // if any trucks are left,
-    // schedule job with first remaining truck
-    // return handleGetTrucks(req, res);
-  // else send client error "Can't schedule your job."
-  return handleGetTrucks(req, res);
+  const conflictingTruckIds = await JobControllers.findConflicts(jobProposal)
+    .map(conflict => conflict ? conflict.dataValues.truckId : []);
+  
+  const availableTrucks = await truckControllers.findAvailableTruck(jobProposal.start_time, jobProposal.duration, conflictingTruckIds)
+    .map(truck => truck ? truck.dataValues.id : false);
+
+  if (availableTrucks.length) {
+    jobProposal.truckId = availableTrucks[0];
+    return JobControllers.createJob(jobProposal)
+      .then(() => handleGetTrucks(req, res))
+      .catch(e => res.send(e));
+  }
+  res.send(Error('Can\'t book your job at this time.'));
 });
 
 app.delete('/jobs/:id', (req, res) => {
