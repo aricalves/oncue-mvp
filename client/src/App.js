@@ -39,7 +39,7 @@ class App extends Component {
     axios.post('/trucks', truck)
       .then(response => this.formatResponseOrErr(response))
       .then(newState => this.setState(newState))
-      .catch(e => alert('Cannot get trucks at this time. Please try again later.'));
+      .catch(e => alert('Cannot create your truck at this time. Please try again later.'));
 
     e.target.reset();
   }
@@ -54,7 +54,7 @@ class App extends Component {
     axios.post('/jobs', newJob)
       .then(response => this.formatResponseOrErr(response))
       .then(newState => this.setState(newState))
-      .catch(e => alert('Sorry, cannot book your job at this time.'));
+      .catch(e => alert('Sorry, your job has a scheduling conflict. Select another time.'));
 
     e.target.reset();
   }
