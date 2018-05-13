@@ -50,21 +50,12 @@ class App extends Component {
     const jobEnd = (e.target.duration.value * 100) + jobStart;
     const newJob = new Job(e.target['customer-name'].value, e.target.date.value, jobStart, jobEnd);
 
-    // prioritize scheduling trucks without jobs first
-    const trucksWithoutJobs = this.state.trucks.filter(truck => truck.jobs.length === 0);
-    if (trucksWithoutJobs.length) {
-      // found a truck with no jobs, schedule job
-      newJob.truckId = trucksWithoutJobs[0].id;
-      axios.post('/jobs', newJob)
-        .then(response => this.formatResponseOrErr(response))
-        .then(newState => this.setState(newState))
-        .catch(e => alert('Sorry, we had trouble booking your job. There are no conflicts, try again.'));
-    } else {
-      // send job proposition to server to find if any resources can pick up job
-      axios.post('/jobs/propose', newJob)
-        .then(response => console.log(response.data))
-        .catch(e => console.error(e));
-    }
+    // send job proposition to server to find if any resources can pick up job
+    axios.post('/jobs', newJob)
+      .then(response => this.formatResponseOrErr(response))
+      .then(newState => this.setState(newState))
+      .catch(e => alert('Sorry, cannot book your job at this time.'));
+
     e.target.reset();
   }
 
