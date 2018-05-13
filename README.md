@@ -6,6 +6,25 @@ An MVP solution to automating scheduling client jobs for moving companies.
 
 Find my (minimal) app plan [here](https://docs.google.com/document/d/1L6f221wNPLa2bSQVG2loMHuqiIpd0YrZiS-bfsZsigs/edit?usp=sharing)
 
+## Directions
+
+### Requirements
+- Node@10.1.0
+- npm@6.0.1
+- PostgreSQL@10
+- (Suggested) Chrome@66^
+### Development
+- Clone this repo and cd into project directory
+- In your terminal run `npm run install`
+- Still in terminal run `npm start`
+- Navigate to http://localhost:3000/ in your browser
+### Production Build
+- Clone this repo and cd into project directory
+- In your terminal run `npm run install`
+- Still in terminal run `npm run build`
+- Finally `npm run local:prod`
+- Navigate to http://localhost:3001/ in your browser
+
 ## Tech: React, Node.js, Express, and Postgres
 Honorable Mentions: Sequelize, Axios, and Babel
 

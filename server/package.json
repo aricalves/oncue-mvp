@@ -10,6 +10,7 @@
   "scripts": {
     "start": "nodemon --exec babel-node index.js",
     "start:prod": "node build/index.js",
+    "local:prod": "NODE_ENV=local node build/index.js",
     "build": "babel . --ignore node_modules,build --out-dir build"
   },
   "keywords": [],
